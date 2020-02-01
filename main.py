@@ -13,7 +13,7 @@ from config import secret
 from config import bucketname
 
 FileHospitalGeneralData="MedicareDataAnalysis/HospitalData/Hospital General Information.csv"
-FileHosipitalSpendingNationalData="MedicareDataAnalysis/HospitalData/Medicare Hospital Spending Per Patient - National.csv"
+FileHosipitalSpendingStateData="MedicareDataAnalysis/HospitalData/Medicare Hospital Spending Per Patient - State.csv"
 FilePhysicianData="MedicareDataAnalysis/HospitalData/Hospital General Information.csv"
 FilePhysicianNationalData="MedicareDataAnalysis/PhysicianData/Physician_Compare_National_Downloadable_File.csv"
 FilePhysicianGroupMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Group_Public_Reporting-Overall_MIPS_Performance.csv"
