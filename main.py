@@ -13,6 +13,7 @@ from botocore.exceptions import ClientError
 from config import awskey
 from config import secret
 from config import bucketname
+from config import googlekey
 
 FileHospitalGeneralData="MedicareDataAnalysis/HospitalData/Hospital General Information.csv"
 FileHosipitalSpendingStateData="MedicareDataAnalysis/HospitalData/Medicare Hospital Spending Per Patient - State.csv"
@@ -20,6 +21,8 @@ FilePhysicianData="MedicareDataAnalysis/HospitalData/Hospital General Informatio
 FilePhysicianNationalData="MedicareDataAnalysis/PhysicianData/Physician_Compare_National_Downloadable_File.csv"
 FilePhysicianGroupMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Group_Public_Reporting-Overall_MIPS_Performance.csv"
 FilePhysicianIndivialMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Individual_EC_Public_Reporting_-_Overall_MIPS_Performance.csv"
+
+OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
 
 class DataLoader():
 	def LoadFile(file):
@@ -34,17 +37,40 @@ class DataHandler():
     def HospitalDataStarFilter(StarScore):
         if (StarScore<=5):
             Hospital_Data=pd.DataFrame(DataLoader.LoadFile(FileHospitalGeneralData))
-            print(len(Hospital_Data))
+            Lat =[]
+            Lng =[]
+            #print(len(Hospital_Data))
             HospitalStarsRated=Hospital_Data.loc[Hospital_Data["Hospital overall rating"] == str(StarScore)]
+            #print(len(HospitalStarsRated))
+            HospitalStarsRated=HospitalStarsRated[["Facility Name","Address","City","State","Hospital Ownership"]]
+            HospitalStarsRated=HospitalStarsRated.dropna(how="any")
             print(len(HospitalStarsRated))
-            HospitalStarsRated=HospitalStarsRated[["Facility Name","Address","City","State","Hospital Ownership"]]    
+            for index,Hospital in HospitalStarsRated.iterrows():
+                #print(googleapi.getLatLon(Hospital["Address"]))
+                if googleapi.getLatLon(Hospital["Address"])[0] == "Nan":
+                    Lat.append(None)
+                    Lng.append(None)
+                else:
+                    Lat.append(googleapi.getLatLon(Hospital["Address"])[0])
+                    Lng.append(googleapi.getLatLon(Hospital["Address"])[1])
+            HospitalStarsRated["Lat"]=Lat
+            HospitalStarsRated["Lng"]=Lng
+            HospitalStarsRated=HospitalStarsRated.dropna(how="any")
+            print(len(HospitalStarsRated))
         return HospitalStarsRated
 
 class googleapi():
-    def getLatLon(Address):    
+    def getLatLon(Address):
+        loc =[]
         #Send request and receive json data by address
-        target_url = (f'https://maps.googleapis.com/maps/api/geocode/json?address={Adress}&key={googlekey}')
+        target_url = ('https://maps.googleapis.com/maps/api/geocode/json?''address={0}&key={1}').format(Address, googlekey)
         geo_data = requests.get(target_url).json()
-        lat = geo_data["results"][0]["geometry"]["location"]["lat"]
-        lng = geo_data["results"][0]["geometry"]["location"]["lng"]
-        return lat,lng
+        if geo_data["status"] == 'OK':
+            #lat = geo_data["results"][0]["geometry"]["location"]["lat"]
+            #lng = geo_data["results"][0]["geometry"]["location"]["lng"]
+            loc.append(geo_data["results"][0]["geometry"]["location"]["lat"])
+            loc.append(geo_data["results"][0]["geometry"]["location"]["lng"])
+        else:
+            loc.append("NaN")
+            loc.append("NaN")
+        return loc
