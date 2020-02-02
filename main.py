@@ -44,7 +44,7 @@ class DataHandler():
             #print(len(HospitalStarsRated))
             HospitalStarsRated=HospitalStarsRated[["Facility Name","Address","City","State","Hospital Ownership"]]
             HospitalStarsRated=HospitalStarsRated.dropna(how="any")
-            print(len(HospitalStarsRated))
+            #print(len(HospitalStarsRated))
             for index,Hospital in HospitalStarsRated.iterrows():
                 #print(googleapi.getLatLon(Hospital["Address"]))
                 if googleapi.getLatLon(Hospital["Address"])[0] == "Nan":
@@ -56,7 +56,7 @@ class DataHandler():
             HospitalStarsRated["Lat"]=Lat
             HospitalStarsRated["Lng"]=Lng
             HospitalStarsRated=HospitalStarsRated.dropna(how="any")
-            print(len(HospitalStarsRated))
+            #print(len(HospitalStarsRated))
         return HospitalStarsRated
 
 class googleapi():
