@@ -5,6 +5,7 @@ from sklearn import datasets
 import pandas as pd
 import boto3
 import json
+from pandas.io.json import json_normalize
 import requests
 from boto3 import session
 import io
@@ -74,3 +75,24 @@ class googleapi():
             loc.append("NaN")
             loc.append("NaN")
         return loc
+
+class npiapi():
+    def GetAddress(SingleDF):
+        npi=SingleDF["NPI"]
+        url=f"https://npiregistry.cms.hhs.gov/api/?version=2.0&number={npi}"
+        #print(url)
+        response=requests.get(url).text
+        response=json.loads(response)
+        result=json_normalize(response["results"])
+        getAddress=pd.DataFrame(json_normalize(result["addresses"][0]))
+        getAddress=getAddress.loc[getAddress["address_purpose"]=='LOCATION']
+        OutDF = pd.DataFrame({"NPI" : npi , 
+                              "First Name" : SingleDF["First Name"],
+                              "Last Name" : SingleDF["Last Name"],
+                              "Address": getAddress["address_1"],
+                             "City":getAddress["city"],
+                             "State": getAddress["state"],
+                              "PostalCode" : getAddress["postal_code"],
+                              "Phone" : getAddress["telephone_number"]
+                             })
+        return OutDF
