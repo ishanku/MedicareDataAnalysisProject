@@ -30,7 +30,7 @@ The R-Pythons
 
 # 1. Analysis on Hospital ranking parameters
 
-    Retrieving the dataset from the source data.medicare.com
+ ## Retrieving the dataset from the source data.medicare.com
     
    i. Downloaded the latest(2019) Hospital General Information.csv from data.medicare.gov
    
@@ -50,33 +50,34 @@ The R-Pythons
            4. Patient experience national compare
            5. Readmission national compare
     
-   vi. Cleaning of the dataset:
-          1. The columns in the consolidated dataset had "Not Available" values and the rows containing these values were deleted.
-          2. Column names were shortened to exclude the string "national compare" which is redundant among all columns
+   ## Cleaning of the dataset:
+   1. The columns in the consolidated dataset had "Not Available" values and the rows containing these values were deleted.
+   2. Column names were shortened to exclude the string "national compare" which is redundant among all columns
        
-   vii. Hospital Overall Ratings dataset:
-           1. Created another dataframe extracting the column "Hospital Overall Rating" from the file object. 
-           2. Cleaned the dataset to exclude "Not available" values
-           3. Extracted the count of number of hospitals under each Rank category using seriesRatings.str.count()
-           4. Created a Ranking_df with the counts of each rank.
+   ## Hospital Overall Ratings dataset:
+   1. Created another dataframe extracting the column "Hospital Overall Rating" from the file object. 
+   2. Cleaned the dataset to exclude "Not available" values
+   3. Extracted the count of number of hospitals under each Rank category using seriesRatings.str.count()
+   4. Created a Ranking_df with the counts of each rank.
     
-   ix. Extracted the count of number of hospitals scored for each of the five measure parameter under the below categories:
+   - Extracted the count of number of hospitals scored for each of the five measure parameter under the below categories:
            
            1. Above the national average
            2. Below the national average
            3. Same as the national average
    
-   x. Create a 5x3 dataframe (Count_summary_df) with the count values under each category for all five parameters.
+   - Create a 5x3 dataframe (Count_summary_df) with the count values under each category for all five parameters.
    
-   xi. Pie Plots displaying the summarized information on hospital ranking parameters
+   ## Plotting the summarized data
+   - Pie Plots displaying the summarized information on hospital ranking parameters
    
            <Pie Plot image>
            
-   xii. Stacked bar plots displaying the number of hospitals categorized as above, below and same as national average.
+   - Stacked bar plots displaying the number of hospitals categorized as above, below and same as national average.
            
            <Stacked Bar plot>
           
-   xiii. Bar plot displaying under the number of hospitals ranked overall.
+   - Bar plot displaying under the number of hospitals ranked overall.
    
            <Ranking Bar plot>
 
