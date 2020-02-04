@@ -211,3 +211,41 @@ The R-Pythons
 
 3.	Bar plot displaying MIPS score by gender.
         [MIPS Score by gender](https://github.com/ishanku/MedicareDataAnalysisProject/blob/master/output/gender_AvgMIPS.png)
+
+# Analysis of physician data
+
+ 1.Downloaded the following dataset -
+  • final_physician_data.csv
+  
+2. Read the final_pyhisician file that was already cleaned up
+   finalphysician_file = "Output/final_physician_data.csv"
+   final_physician = pd.read_csv(finalphysician_file)
+   final_physician.head()
+   
+3. The columns on the file where identified writing a single line of code
+   final_physician.columns
+   
+4. The physician's genders were grouped then put on a data frame to identify the total number of the Female Physician and
+  the Male Physician
+  physician_gender = final_physician.groupby(["Final MIPS Score","Gender"])
+  physician_gender then called the number of the sex using the function. size() physician_gender_df =
+  pd.DataFrame(physician_gender.size())
+  
+5. I used the function .count to get a clearer number of the gender
+   physician_gender = pd.DataFrame(physician_gender_df.groupby(["Gender"]).count())
+   
+6. create and format to determine the percentage of female vs male
+   physician_gender["Percentage of Sex"] = (100*(physician_gender["Final MIPS Score"]/physician_gender["Final MIPS
+    Score"].sum()))
+    
+7. Then format the "Percentage of Sex" in the column using the line of code
+   physician_gender["Percentage of Sex"] = physician_gender["Percentage of Sex"]
+   
+8. created a dataframe of the Gender and the percentage of each gender
+   physician_gender
+   
+9. Draw a pie chart to  to illustrate numerical proportion of our Gender Analyse.
+  colors = ['orange', 'blue']
+  explode = (0.1, 0)
+  plot = physician_gender.plot.pie(y='Final MIPS Score',figsize=(5,5),
+                                 colors = colors, startangle=140, explode = explode,
