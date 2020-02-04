@@ -70,12 +70,12 @@ The R-Pythons
    
    xi. Pie Plots displaying the summarized information on hospital ranking parameters
    
-           Pie-Charts-Percentage.png
+           output/Pie-Charts-Percentage.png
            
    xii. Stacked bar plots displaying the number of hospitals categorized as above, below and same as national average.
            
-           Measures-National-Compare.png
+           output/Measures-National-Compare.png
           
    xiii. Bar plot displaying under the number of hospitals ranked overall.
    
-           Hospital-Overall-Ranking.png
+           output/Hospital-Overall-Ranking.png
