@@ -28,7 +28,7 @@ The R-Pythons
   9. Bonus!
 
 
-# Analysis on Hospital ranking parameters
+# 1. Analysis on Hospital ranking parameters
 
     Retrieving the dataset from the source data.medicare.com
     
