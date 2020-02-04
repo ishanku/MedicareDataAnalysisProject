@@ -70,13 +70,13 @@ The R-Pythons
    
    xi. Pie Plots displaying the summarized information on hospital ranking parameters
    
-           <Pie Plot image>
+           http://localhost:8888/files/Users/roopareddynagilla/Documents/All_Documents/GaTech_DataScience_BootCamp/siva-repo/MedicareDataAnalysisProject/collaborator/MedicareDataAnalysisProject/output/Pie-Charts-Percentage.png
            
    xii. Stacked bar plots displaying the number of hospitals categorized as above, below and same as national average.
            
-           <Stacked Bar plot>
+           http://localhost:8888/files/Users/roopareddynagilla/Documents/All_Documents/GaTech_DataScience_BootCamp/siva-repo/MedicareDataAnalysisProject/collaborator/MedicareDataAnalysisProject/output/Measures-National-Compare.png
           
    xiii. Bar plot displaying under the number of hospitals ranked overall.
    
-           <Ranking Bar plot>
+           http://localhost:8888/files/Users/roopareddynagilla/Documents/All_Documents/GaTech_DataScience_BootCamp/siva-repo/MedicareDataAnalysisProject/collaborator/MedicareDataAnalysisProject/output/Hospital-Overall-Ranking.png
 
