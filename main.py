@@ -13,11 +13,14 @@ from botocore.exceptions import ClientError
 from config import awskey
 from config import secret
 from config import bucketname
-#from config import googlekey
+from config import googlekey
 
 FileHospitalGeneralData="MedicareDataAnalysis/HospitalData/Hospital General Information.csv"
 FileHosipitalSpendingStateData="MedicareDataAnalysis/HospitalData/Medicare Hospital Spending Per Patient - State.csv"
 FilePhysicianData="MedicareDataAnalysis/HospitalData/Hospital General Information.csv"
+FileHG_2018="MedicareDataAnalysis/HospitalData/Hospital General Information-2018.csv"
+FileHG_2017="MedicareDataAnalysis/HospitalData/HospitalGeneralInformation-2017.csv"
+FileHG_2016="MedicareDataAnalysis/HospitalData/HospitalGeneralInformation-2016.csv"
 FilePhysicianNationalData="MedicareDataAnalysis/PhysicianData/Physician_Compare_National_Downloadable_File.csv"
 FilePhysicianGroupMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Group_Public_Reporting-Overall_MIPS_Performance.csv"
 FilePhysicianIndivialMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Individual_EC_Public_Reporting_-_Overall_MIPS_Performance.csv"
