@@ -28,7 +28,9 @@ FileHospitalCDData="MedicareDataAnalysis/HospitalData/Complications and Deaths -
 FileHospitalCDHData="MedicareDataAnalysis/HospitalData/Complications and Deaths - Hospital.csv"
 
 OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
-
+FileHG_2018="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2018.csv"
+FileHG_2017="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2017.csv"
+FileHG_2016="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2016.csv"
 class DataLoader():
 	def LoadFile(file):
 		s3 = boto3.client('s3',aws_access_key_id=awskey,aws_secret_access_key=secret)
