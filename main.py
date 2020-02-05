@@ -5,6 +5,7 @@ from sklearn import datasets
 import pandas as pd
 import boto3
 import json
+from pandas.io.json import json_normalize
 import requests
 from boto3 import session
 import io
@@ -27,7 +28,9 @@ FileHG_2016="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2016.csv"
 
 
 OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
-
+FileHG_2018="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2018.csv"
+FileHG_2017="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2017.csv"
+FileHG_2016="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2016.csv"
 class DataLoader():
 	def LoadFile(file):
 		s3 = boto3.client('s3',aws_access_key_id=awskey,aws_secret_access_key=secret)
