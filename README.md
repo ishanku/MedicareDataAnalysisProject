@@ -249,3 +249,42 @@ The R-Pythons
   explode = (0.1, 0)
   plot = physician_gender.plot.pie(y='Final MIPS Score',figsize=(5,5),
                                  colors = colors, startangle=140, explode = explode,
+                                 
+# Physician Analysis based on Gender, Years of Experience and Primary Specialty
+
+##  1.Access Dataset
+       a.	Imported necessary modules to conduct the analysis
+       b.	On main.py, Import the required modules for establishing connection with AWS S3 bucket along with config file containing awskey and secret key. Created a class DataLoader and method LoadFile() that can download a file from S3 bucket and create a file handle object.
+       c.	Imported files pertaining to current Physician Medicare Data.
+       
+##  2.	Clean the Dataset
+        Edit the Dataset based on required parameters to conduct the analysis.
+        a.	Dropped columns not needed for analysis
+        b.	Drop rows with NaN values.
+        c.	Calculate data based on Unique physicians NPI’s.
+        d.	Calculate Years of Experience based on Graduation Year (Assumption – Physicians started working immediately post graduation  and were employed throughout the period)
+        
+##  3.	Physician Analysis – Based on Years of Experience
+        a.	Conducted an MIPs Score Analysis based on Years of Experience to figure out if there was any correlation between both the variables
+        b.	Used Boxplot as Data Visualization tool to help the the relation.
+        c.	Results:
+        i.	As seen from the Boxplot the average MIPS score tends to be on the rise in the beginning years and is quite high from around 4th year onwards and stays that way for a significant amount of time.
+       ii.	The mean MIPS score starts lowering a little with high years of experience maybe due to factors such as age.
+The analysis is insufficient to draw any kind of significant conclusion regarding the relation between these two variables. More data such as age, other factors affecting the MIPS score.
+
+## 4.	Physician Analysis – Based on Gender
+      a.	Conducted an MIPs Score Analysis based on Gender to figure out if there was any correlation between both the variables
+      b.	Used Boxplot as Data Visualization tool to help see the relation.
+      c.	Conducted Independent Samples T-test to compare the means of both the Groups.
+      i.	Null Hypothesis – There is no correlation between Gender and MIPS score
+Alternate Hypothesis – There is significant relationship between Gender and MIPS score
+With the T-test results -  statistic=22.41969156703278, pvalue=3.526868410040483e-111) it can be said that there is a correlation between Gender and MIPS score which can be explored further.
+
+## 5.	Physician Analysis – Based on Speciality
+      a.	Conducted an MIPs Score Analysis based on Speciality to figure out if there was any correlation between both the variables
+      b.	Zeroed in on the three specialties which occurred the most.
+      c.	Used Boxplot as Data Visualization tool to help see the relation.
+      d.	Conducted Anova Test to compare the means of both the Groups.
+      i.	Null Hypothesis – There is no correlation between Speciality and MIPS score
+Alternate Hypothesis – There is significant relationship between Speciality and MIPS score
+Based on the results we conducted further T-tests between the groups which further indicated a high correlation between the kind of speciality and the MIPS score. We thus reject the Null Hypothesis.
