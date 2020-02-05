@@ -22,6 +22,10 @@ FilePhysicianData="MedicareDataAnalysis/HospitalData/Hospital General Informatio
 FilePhysicianNationalData="MedicareDataAnalysis/PhysicianData/Physician_Compare_National_Downloadable_File.csv"
 FilePhysicianGroupMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Group_Public_Reporting-Overall_MIPS_Performance.csv"
 FilePhysicianIndivialMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Individual_EC_Public_Reporting_-_Overall_MIPS_Performance.csv"
+FileNPIData="NPIData/npidata_pfile_20050523-20200112.csv"
+FileNPIDataHeader="NPIData/npidata_pfile_20050523-20200112_FileHeader"
+FileHospitalCDData="MedicareDataAnalysis/HospitalData/Complications and Deaths - State.csv"
+FileHospitalCDHData="MedicareDataAnalysis/HospitalData/Complications and Deaths - Hospital.csv"
 
 OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
 
@@ -83,16 +87,19 @@ class npiapi():
         #print(url)
         response=requests.get(url).text
         response=json.loads(response)
-        result=json_normalize(response["results"])
-        getAddress=pd.DataFrame(json_normalize(result["addresses"][0]))
-        getAddress=getAddress.loc[getAddress["address_purpose"]=='LOCATION']
-        OutDF = pd.DataFrame({"NPI" : npi , 
-                              "First Name" : SingleDF["First Name"],
-                              "Last Name" : SingleDF["Last Name"],
-                              "Address": getAddress["address_1"],
-                             "City":getAddress["city"],
-                             "State": getAddress["state"],
-                              "PostalCode" : getAddress["postal_code"],
-                              "Phone" : getAddress["telephone_number"]
-                             })
+        try:
+            result=json_normalize(response["results"])
+            getAddress=pd.DataFrame(json_normalize(result["addresses"][0]))
+            getAddress=getAddress.loc[getAddress["address_purpose"]=='LOCATION']
+            OutDF = pd.DataFrame({"NPI" : npi , 
+                                  "First Name" : SingleDF["First Name"],
+                                  "Last Name" : SingleDF["Last Name"],
+                                  "Address": getAddress["address_1"],
+                                 "City":getAddress["city"],
+                                 "State": getAddress["state"],
+                                  "PostalCode" : getAddress["postal_code"],
+                                  "Phone" : getAddress["telephone_number"]
+                                 })
+        except:
+            OutDF = pd.DataFrame({"NPI" : npi, "Error": "True"}, index=[0])
         return OutDF
