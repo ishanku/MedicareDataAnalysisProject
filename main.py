@@ -5,6 +5,7 @@ from sklearn import datasets
 import pandas as pd
 import boto3
 import json
+from pandas.io.json import json_normalize
 import requests
 from boto3 import session
 import io
@@ -21,13 +22,15 @@ FilePhysicianData="MedicareDataAnalysis/HospitalData/Hospital General Informatio
 FilePhysicianNationalData="MedicareDataAnalysis/PhysicianData/Physician_Compare_National_Downloadable_File.csv"
 FilePhysicianGroupMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Group_Public_Reporting-Overall_MIPS_Performance.csv"
 FilePhysicianIndivialMIPSData="MedicareDataAnalysis/PhysicianData/Physician_Compare_2017_Individual_EC_Public_Reporting_-_Overall_MIPS_Performance.csv"
+FileNPIData="NPIData/npidata_pfile_20050523-20200112.csv"
+FileNPIDataHeader="NPIData/npidata_pfile_20050523-20200112_FileHeader"
+FileHospitalCDData="MedicareDataAnalysis/HospitalData/Complications and Deaths - State.csv"
+FileHospitalCDHData="MedicareDataAnalysis/HospitalData/Complications and Deaths - Hospital.csv"
+
+OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
 FileHG_2018="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2018.csv"
 FileHG_2017="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2017.csv"
 FileHG_2016="MedicareDataAnalysis/HospitalData/HospitalGeneralInfo-2016.csv"
-
-
-OutputFilePhysicianData="MedicareDataAnalysis/Output/final_physician_data.csv"
-
 class DataLoader():
 	def LoadFile(file):
 		s3 = boto3.client('s3',aws_access_key_id=awskey,aws_secret_access_key=secret)
@@ -78,3 +81,27 @@ class googleapi():
             loc.append("NaN")
             loc.append("NaN")
         return loc
+
+class npiapi():
+    def GetAddress(SingleDF):
+        npi=SingleDF["NPI"]
+        url=f"https://npiregistry.cms.hhs.gov/api/?version=2.0&number={npi}"
+        #print(url)
+        response=requests.get(url).text
+        response=json.loads(response)
+        try:
+            result=json_normalize(response["results"])
+            getAddress=pd.DataFrame(json_normalize(result["addresses"][0]))
+            getAddress=getAddress.loc[getAddress["address_purpose"]=='LOCATION']
+            OutDF = pd.DataFrame({"NPI" : npi , 
+                                  "First Name" : SingleDF["First Name"],
+                                  "Last Name" : SingleDF["Last Name"],
+                                  "Address": getAddress["address_1"],
+                                 "City":getAddress["city"],
+                                 "State": getAddress["state"],
+                                  "PostalCode" : getAddress["postal_code"],
+                                  "Phone" : getAddress["telephone_number"]
+                                 })
+        except:
+            OutDF = pd.DataFrame({"NPI" : npi, "Error": "True"}, index=[0])
+        return OutDF
