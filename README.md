@@ -1,4 +1,4 @@
-# GroupProject-1
+# MedicareDataAnalysisProject
 First Group project for Data Bootcamp, Gatech - by Roopa, Siva, Khusboo, Victor and Julie
 
 The R-Pythons
