@@ -77,4 +77,3 @@ class googleapi():
             loc.append("NaN")
             loc.append("NaN")
         return loc
-
